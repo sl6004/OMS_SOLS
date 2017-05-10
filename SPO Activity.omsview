@@ -1,0 +1,458 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "resourcegroup": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "subscriptionId": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "workspace": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "workspaceapiversion": {
+            "type": "string",
+            "defaultValue": ""
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "[parameters('workspaceapiversion')]",
+            "name": "[parameters('workspace')]",
+            "type": "Microsoft.OperationalInsights/workspaces",
+            "location": "[parameters('location')]",
+            "id": "[Concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', parameters('resourcegroup'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspace'))]",
+            "resources": [
+                {
+                    "apiVersion": "2015-11-01-preview",
+                    "name": "SPO Activity",
+                    "type": "views",
+                    "location": "[parameters('location')]",
+                    "id": "[Concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', parameters('resourcegroup'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspace'),'/views/SPO Activity')]",
+                    "dependson": [
+                        "[Concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', parameters('resourcegroup'), '/providers/Microsoft.OperationalInsights/workspaces/', parameters('workspace'))]"
+                    ],
+                    "properties": {
+                        "Id": "SPO Activity",
+                        "Name": "SPO Activity",
+                        "Author": "tom.bromby@kloud.com.au",
+                        "Source": "Local",
+                        "Version": 1,
+                        "Dashboard": [
+                            {
+                                "Id": "InformationBlade",
+                                "Type": "Blade",
+                                "Version": 0,
+                                "Configuration": {
+                                    "General": {
+                                        "Title": "Collaboration",
+                                        "NewGroup": false,
+                                        "Color": "#6dc2e9"
+                                    },
+                                    "Header": {
+                                        "Image": "data:image/gif;base64,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",
+                                        "Label": "SharePoint Dashboard",
+                                        "Link": {
+                                            "Label": "",
+                                            "Url": ""
+                                        }
+                                    },
+                                    "List": [
+                                        {
+                                            "Title": "Demonstration Views",
+                                            "Content": "Created by: Tom Bromby, 15/03/2017\n\nDemo views only, non-prod"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "Id": "NumberTileListBuilderBlade",
+                                "Type": "Blade",
+                                "Version": 0,
+                                "Configuration": {
+                                    "General": {
+                                        "title": "Top SPO Users",
+                                        "newGroup": false,
+                                        "icon": "",
+                                        "useIcon": false
+                                    },
+                                    "Tile": {
+                                        "Query": "Type=OfficeActivity OfficeWorkload=sharepoint Operation=File* Operation!=FileAccessed TimeGenerated>NOW-7DAYS | measure count() by UserId",
+                                        "Legend": "Number of Distinct Users Last 7 Days"
+                                    },
+                                    "List": {
+                                        "Query": "Type=OfficeActivity OfficeWorkload=sharepoint Operation=File* TimeGenerated>NOW-7DAYS | measure count() by UserId",
+                                        "HideGraph": false,
+                                        "enableSparklines": false,
+                                        "operation": "Summary",
+                                        "ColumnsTitle": {
+                                            "Name": "User Name",
+                                            "Value": "File Operations"
+                                        },
+                                        "Color": "#0072c6",
+                                        "thresholds": {
+                                            "isEnabled": true,
+                                            "values": [
+                                                {
+                                                    "name": "Normal",
+                                                    "threshold": "Default",
+                                                    "color": "#009e49",
+                                                    "isDefault": true
+                                                },
+                                                {
+                                                    "name": "Warning",
+                                                    "threshold": "100",
+                                                    "color": "#fcd116",
+                                                    "isDefault": false
+                                                },
+                                                {
+                                                    "name": "Error",
+                                                    "threshold": "200",
+                                                    "color": "#ba141a",
+                                                    "isDefault": false
+                                                }
+                                            ]
+                                        },
+                                        "NameDSVSeparator": "",
+                                        "NavigationQuery": "{selected item}"
+                                    }
+                                }
+                            },
+                            {
+                                "Id": "NumberTileListBuilderBlade",
+                                "Type": "Blade",
+                                "Version": 0,
+                                "Configuration": {
+                                    "General": {
+                                        "title": "File Checkouts by User",
+                                        "newGroup": false,
+                                        "icon": "",
+                                        "useIcon": false
+                                    },
+                                    "Tile": {
+                                        "Query": "Type=OfficeActivity OfficeWorkload=Sharepoint UserId!=spoadmin* TimeGenerated>NOW-7DAYS Operation=FileCheckedOut*",
+                                        "Legend": "Total Checkouts Last 7 Days"
+                                    },
+                                    "List": {
+                                        "Query": "Type=OfficeActivity OfficeWorkload=Sharepoint UserId!=spoadmin* TimeGenerated>NOW-7DAYS Operation=FileCheckedOut* | measure count() by UserId",
+                                        "HideGraph": false,
+                                        "enableSparklines": false,
+                                        "operation": "Summary",
+                                        "ColumnsTitle": {
+                                            "Name": "File Checkouts by User",
+                                            "Value": "Count"
+                                        },
+                                        "Color": "#0072c6",
+                                        "thresholds": {
+                                            "isEnabled": false,
+                                            "values": [
+                                                {
+                                                    "name": "Normal",
+                                                    "threshold": "Default",
+                                                    "color": "#009e49",
+                                                    "isDefault": true
+                                                },
+                                                {
+                                                    "name": "Warning",
+                                                    "threshold": "60",
+                                                    "color": "#fcd116",
+                                                    "isDefault": false
+                                                },
+                                                {
+                                                    "name": "Error",
+                                                    "threshold": "90",
+                                                    "color": "#ba141a",
+                                                    "isDefault": false
+                                                }
+                                            ]
+                                        },
+                                        "NameDSVSeparator": "",
+                                        "NavigationQuery": "{selected item}"
+                                    }
+                                }
+                            },
+                            {
+                                "Id": "TwoTrendsAndListBuilderBlade",
+                                "Type": "Blade",
+                                "Version": 0,
+                                "Configuration": {
+                                    "General": {
+                                        "title": "File Uploads & Downloads Last 24 Hours",
+                                        "newGroup": false,
+                                        "icon": "",
+                                        "useIcon": false
+                                    },
+                                    "Trend1": {
+                                        "Legend": "All Uploads",
+                                        "LegendColor": "#ba141a",
+                                        "ChartQuery": "Type=OfficeActivity OfficeWorkload=sharepoint Operation=FileUploaded TimeGenerated>NOW-24HOURS",
+                                        "Calculation": {
+                                            "Operation": "Sum"
+                                        }
+                                    },
+                                    "Trend2": {
+                                        "Legend": "All Downloads",
+                                        "LegendColor": "#007233",
+                                        "ChartQuery": "Type=OfficeActivity OfficeWorkload=sharepoint Operation=FileDownloaded TimeGenerated>NOW-24HOURS",
+                                        "Calculation": {
+                                            "Operation": "Sum"
+                                        }
+                                    },
+                                    "List": {
+                                        "Query": "Type=OfficeActivity OfficeWorkload=sharepoint Operation=FileDownloaded TimeGenerated>NOW-24HOURS |  measure count() by UserId",
+                                        "HideGraph": false,
+                                        "enableSparklines": false,
+                                        "operation": "Summary",
+                                        "ColumnsTitle": {
+                                            "Name": "Top Downloaders",
+                                            "Value": "FIle Count"
+                                        },
+                                        "Color": "#68217a",
+                                        "thresholds": {
+                                            "isEnabled": false,
+                                            "values": [
+                                                {
+                                                    "name": "Normal",
+                                                    "threshold": "Default",
+                                                    "color": "#009e49",
+                                                    "isDefault": true
+                                                },
+                                                {
+                                                    "name": "Warning",
+                                                    "threshold": "60",
+                                                    "color": "#fcd116",
+                                                    "isDefault": false
+                                                },
+                                                {
+                                                    "name": "Error",
+                                                    "threshold": "90",
+                                                    "color": "#ba141a",
+                                                    "isDefault": false
+                                                }
+                                            ]
+                                        },
+                                        "NameDSVSeparator": "",
+                                        "NavigationQuery": "{selected item}"
+                                    }
+                                }
+                            },
+                            {
+                                "Id": "TwoTrendsAndListBuilderBlade",
+                                "Type": "Blade",
+                                "Version": 0,
+                                "Configuration": {
+                                    "General": {
+                                        "title": "Deletion Activity 24 Hours",
+                                        "newGroup": false,
+                                        "icon": "",
+                                        "useIcon": false
+                                    },
+                                    "Trend1": {
+                                        "Legend": "File Deletion",
+                                        "LegendColor": "#ba141a",
+                                        "ChartQuery": "Type=OfficeActivity OfficeWorkload=sharepoint Operation=FileDeleted TimeGenerated>NOW-24HOURS ",
+                                        "Calculation": {
+                                            "Operation": "Sum"
+                                        }
+                                    },
+                                    "Trend2": {
+                                        "Legend": "File Restores",
+                                        "LegendColor": "#ff8c00",
+                                        "ChartQuery": "Type=OfficeActivity OfficeWorkload=sharepoint Operation=FileRestored TimeGenerated>NOW-24HOURS ",
+                                        "Calculation": {
+                                            "Operation": "Sum"
+                                        }
+                                    },
+                                    "List": {
+                                        "Query": "Type=OfficeActivity OfficeWorkload=sharepoint Operation=FileDeleted TimeGenerated>NOW-24HOURS  | measure count() by UserId",
+                                        "HideGraph": false,
+                                        "enableSparklines": false,
+                                        "operation": "Summary",
+                                        "ColumnsTitle": {
+                                            "Name": "Top File Deletors",
+                                            "Value": "Count"
+                                        },
+                                        "Color": "#0072c6",
+                                        "thresholds": {
+                                            "isEnabled": true,
+                                            "values": [
+                                                {
+                                                    "name": "Normal",
+                                                    "threshold": "Default",
+                                                    "color": "#009e49",
+                                                    "isDefault": true
+                                                },
+                                                {
+                                                    "name": "Warning",
+                                                    "threshold": "60",
+                                                    "color": "#fcd116",
+                                                    "isDefault": false
+                                                },
+                                                {
+                                                    "name": "Error",
+                                                    "threshold": "90",
+                                                    "color": "#ba141a",
+                                                    "isDefault": false
+                                                }
+                                            ]
+                                        },
+                                        "NameDSVSeparator": "",
+                                        "NavigationQuery": "{selected item}"
+                                    }
+                                }
+                            },
+                            {
+                                "Id": "TwoNumberTileListBuilderBlade",
+                                "Type": "Blade",
+                                "Version": 0,
+                                "Configuration": {
+                                    "General": {
+                                        "title": "External Sharing - Last 7 Days",
+                                        "newGroup": false,
+                                        "icon": "data:image/png;base64,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",
+                                        "useIcon": true
+                                    },
+                                    "Tile": {
+                                        "Legend": "Invitations Made",
+                                        "Query": "Type=OfficeActivity OfficeWorkload=sharepoint Operation=AccessInvitationCreated* TimeGenerated>NOW-7DAYS | measure count() by Operation"
+                                    },
+                                    "SecondTile": {
+                                        "Legend": "Invitations Accepted",
+                                        "Query": "Type=OfficeActivity OfficeWorkload=sharepoint Operation=AccessInvitationAccepted* TimeGenerated>NOW-7DAYS | measure count() by Operation"
+                                    },
+                                    "List": {
+                                        "Query": "Type=OfficeActivity OfficeWorkload=sharepoint Operation=AccessInvitationCreated* TimeGenerated>NOW-7DAYS | measure count() by UserId",
+                                        "HideGraph": false,
+                                        "enableSparklines": false,
+                                        "operation": "Summary",
+                                        "ColumnsTitle": {
+                                            "Name": "Invites From",
+                                            "Value": "Count"
+                                        },
+                                        "Color": "#9b4f96",
+                                        "thresholds": {
+                                            "isEnabled": false,
+                                            "values": [
+                                                {
+                                                    "name": "Normal",
+                                                    "threshold": "Default",
+                                                    "color": "#009e49",
+                                                    "isDefault": true
+                                                },
+                                                {
+                                                    "name": "Warning",
+                                                    "threshold": "20",
+                                                    "color": "#fcd116",
+                                                    "isDefault": false
+                                                },
+                                                {
+                                                    "name": "Error",
+                                                    "threshold": "50",
+                                                    "color": "#ba141a",
+                                                    "isDefault": false
+                                                }
+                                            ]
+                                        },
+                                        "NameDSVSeparator": "",
+                                        "NavigationQuery": "{selected item}"
+                                    }
+                                }
+                            },
+                            {
+                                "Id": "TwoNumberTileListBuilderBlade",
+                                "Type": "Blade",
+                                "Version": 0,
+                                "Configuration": {
+                                    "General": {
+                                        "title": "Access Requests Last 7 Days",
+                                        "newGroup": false,
+                                        "icon": "",
+                                        "useIcon": false
+                                    },
+                                    "Tile": {
+                                        "Legend": "Requests Made",
+                                        "Query": "Type=OfficeActivity OfficeWorkload=Sharepoint Operation=AccessRequestCreated TimeGenerated>NOW-7DAYS | measure count() by TimeGenerated"
+                                    },
+                                    "SecondTile": {
+                                        "Legend": "Requests Approved",
+                                        "Query": "Type=OfficeActivity OfficeWorkload=Sharepoint Operation=AccessRequestApproved TimeGenerated>NOW-7DAYS | measure count() by TimeGenerated"
+                                    },
+                                    "List": {
+                                        "Query": "Type=OfficeActivity OfficeWorkload=Sharepoint Operation=AccessRequestCreated TimeGenerated>NOW-7DAYS | measure count() by UserId",
+                                        "HideGraph": false,
+                                        "enableSparklines": false,
+                                        "operation": "Summary",
+                                        "ColumnsTitle": {
+                                            "Name": "Top Requestors",
+                                            "Value": "Requests"
+                                        },
+                                        "Color": "#0072c6",
+                                        "thresholds": {
+                                            "isEnabled": false,
+                                            "values": [
+                                                {
+                                                    "name": "Normal",
+                                                    "threshold": "Default",
+                                                    "color": "#009e49",
+                                                    "isDefault": true
+                                                },
+                                                {
+                                                    "name": "Warning",
+                                                    "threshold": "5",
+                                                    "color": "#fcd116",
+                                                    "isDefault": false
+                                                },
+                                                {
+                                                    "name": "Error",
+                                                    "threshold": "15",
+                                                    "color": "#ba141a",
+                                                    "isDefault": false
+                                                }
+                                            ]
+                                        },
+                                        "NameDSVSeparator": "",
+                                        "NavigationQuery": "{selected item}"
+                                    }
+                                }
+                            }
+                        ],
+                        "OverviewTile": {
+                            "Id": "LineChartBuilderTile",
+                            "Type": "OverviewTile",
+                            "Version": 0,
+                            "Configuration": {
+                                "LineChart": {
+                                    "Query": "Type=OfficeActivity OfficeWorkload=sharepoint Operation=File* Operation!=FileAccessed UserId!=spoadmin* TimeGenerated>NOW-7DAYS",
+                                    "yAxis": {
+                                        "isLogarithmic": false,
+                                        "units": {
+                                            "baseUnitType": "",
+                                            "baseUnit": "",
+                                            "displayUnit": ""
+                                        },
+                                        "customLabel": ""
+                                    }
+                                },
+                                "Advanced": {
+                                    "DataFlowVerification": {
+                                        "Enabled": false,
+                                        "Query": "*",
+                                        "Message": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
